@@ -1,19 +1,32 @@
 //-------------------------------------------------------------------------------
 // CORS-PLATFORM IMPORTS. ONLY CHANGE THE IMORTS THAT BELONG TO YOUR PLATOFRM!!!!
 //-------------------------------------------------------------------------------
+// DO NOT CHANGE ANYTHING ABOUT THIS DOM PARSER.
+var _DOMParser;
 if (typeof document != 'undefined') {
 	// You're in a web-browser. Don't 'require' anything.
+	// We can't use 'var' in any conditional in any scenario or Javascript
+	// will say it's already been defined.
+	_DOMParser = DOMParser;
 }
 else if (typeof navigator != 'undefined' && navigator.product == 'ReactNative') {
 	// You're in ReactNative. Import things how you need to here.
 	// @MobileDevs (don't edit the other imports).
 	var axios = require('axios');
-	var { DOMParser } = require('xmldom')
+	let { DOMParser } = require('xmldom')
 }
 else {
 	// You're in NodeJS.
 	var axios = require('axios');
-	var { DOMParser } = require('xmldom')
+	if (typeof DOMParser !== 'undefined') {
+		// It's been defined already in the browser include.
+	} else {
+		// We can't user 'var' because Javascript will hoist and say
+		// it has global scope. We can't use 'const' because it only
+		// goes past this conditional.
+		let { DOMParser } = require('xmldom')
+		_DOMParser = DOMParser;
+	}
 }
 //-------------------------------------------------------------------------------
 // CORS-PLATFORM IMPORTS. ONLY CHANGE THE IMORTS THAT BELONG TO YOUR PLATOFRM!!!!
@@ -28,8 +41,10 @@ else {
 // change and try to make improvements to this and just leave it be. It works.
 //------------------------------------------------------------------------------
 
-
-
+// Fetch the actual dom parser here, weather it was set from the browser or
+// a library import. This one is the only one that's allowed to user 'var'.
+// We can't just use DOMParser itself because they're two ways it can be imported.
+DOMParser = _DOMParser;
 
 function build_tag(label, value) {
 	if (value == null) {

@@ -49,8 +49,8 @@ function _signin() {
 }
 
 console.log('\n');
-signup()
-// signin()
+// signup()
+signin()
 // _signup()
 // _signin()
 
