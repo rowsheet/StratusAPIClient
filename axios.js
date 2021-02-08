@@ -1,16 +1,8 @@
 const axios = require('axios');
 const { DOMParser } = require('xmldom')
 
-// var BASE_URL = 'http://localhost:9000/api/';
-var BASE_URL = 'https://stratus-api-heroku.herokuapp.com/api/';
-
 function build_tag(label, value) {
 	return '<web:' + label + '>' + value + '</web:' + label + '>'
-}
-
-args = {
-	"username": "akleinhans",
-	"password": "myverylongpassword",
 }
 
 function build_args(args) {
@@ -30,7 +22,7 @@ function wrap_method(method, args) {
 	return '<web:' + method + '>' + build_args(args) + '</web:' + method + '>';
 }
 
-function call_api(url, namespace, method, args) {
+function call_api(url, namespace, method, args, success, error) {
 	var xmls = build_xml(namespace, method, args);
 	axios.post(url,xmls,
 		   {headers:
@@ -38,13 +30,13 @@ function call_api(url, namespace, method, args) {
 		   }).then(res=>{
 			   var doc = new DOMParser().parseFromString(res.data);
 			   var json = doc.getElementsByTagName("return")[0].childNodes[0].data;
-			   console.log(json);
+			   success(json);
 		   }).catch(err=>{
-	//		   console.error("Got error.");
-			   console.log(err)
+			   error(err);
 		   });
 }
 
+var BASE_URL = 'https://stratus-api-heroku.herokuapp.com/api/';
 function endpoint(path) {
 	return BASE_URL + path + "?wsdl";
 }
@@ -52,9 +44,21 @@ function endpoint(path) {
 url = endpoint('core/auth');
 namespace = 'coreAuth';
 method = 'signin';
+args = {
+	"username": "akleinhans",
+	"password": "myverylongpassword",
+}
+
+
 
 // console.log(build_tag('username', 'USERNAME'));
 // console.log(build_args(args));
 // console.log(wrap_method(method, args));
 // console.log(build_xml(namespace, method, args));
-console.log(call_api(url, namespace, method, args));
+console.log(call_api(url, namespace, method, args, function(resp) {
+	console.log('success');
+	console.log(resp);
+}, function(err) {
+	console.log('error');
+	console.log(err);
+}));
