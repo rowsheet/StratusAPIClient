@@ -40,20 +40,22 @@ function _success(string) {
 function success(string) {
 	console.log(_success(string));
 }
+
 function request(string) {
-	console.log('\x1b[35m%s\x1b[0m', '\t' + string.replace(/\n/g,'\n\t'));
+	info('\t' + json(string).replace(/\n/g,'\n\t'));
 }
 function response(string) {
-	info('\t' + string.replace(/\n/g,'\n\t'));
+	success('\t' + json(string).replace(/\n/g,'\n\t'));
 }
+function response_err(string) {
+	error('\t' + json(string).replace(/\n/g,'\n\t'));
+}
+
 function json(data) {
-	return JSON.stringify(JSON.parse(data), null, 4);
-}
-function callback(err, result) {
-	if (err) {
-		error("API Response error:");
-	} else {
-		response(json(result.return));
+	try {
+		return JSON.stringify(JSON.parse(data), null, 4);
+	} catch {
+		return JSON.stringify(data, null, 4);
 	}
 }
 function demo() {
@@ -72,12 +74,11 @@ function demo() {
 module.exports = {
 	// test formatting colors
 	demo: demo,
-	// for api responses
-	callback: callback,
 	// formatting
 	json: json,
 	request: request,
 	response: response,
+	response_err: response_err,
 	log: log,
 	info: info,
 	_info: _info,

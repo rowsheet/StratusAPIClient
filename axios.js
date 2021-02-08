@@ -43,7 +43,7 @@ function endpoint(path) {
 
 url = endpoint('core/auth');
 namespace = 'coreAuth';
-method = 'signin';
+method = 'signup';
 args = {
 	"username": "akleinhans",
 	"password": "myverylongpassword",
