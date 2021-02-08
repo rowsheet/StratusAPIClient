@@ -1,3 +1,8 @@
+//-------------------------------------------------------------------------------
+// THIS IS NOT AN API FILE. THIS IS MY UNIT TEST.
+// @MobileDevs You only need to include 'api.js' and 'soap.js'.
+// Don't change any other emports except the ones under 'ReactNative'!
+//-------------------------------------------------------------------------------
 function _log(string) {
 	return '\x1b[0m\x1b[2m' + string + '\x1b[0m';
 }
@@ -93,3 +98,8 @@ module.exports = {
 	_error: _error,
 	ERROR: ERROR,
 }
+//-------------------------------------------------------------------------------
+// THIS IS NOT AN API FILE. THIS IS MY UNIT TEST.
+// @MobileDevs You only need to include 'api.js' and 'soap.js'.
+// Don't change any other emports except the ones under 'ReactNative'!
+//-------------------------------------------------------------------------------

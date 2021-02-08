@@ -1,5 +1,25 @@
-const axios = require('axios');
-const { DOMParser } = require('xmldom')
+//-------------------------------------------------------------------------------
+// CORS-PLATFORM IMPORTS. ONLY CHANGE THE IMORTS THAT BELONG TO YOUR PLATOFRM!!!!
+//-------------------------------------------------------------------------------
+if (typeof document != 'undefined') {
+	// You're in a web-browser. Don't 'require' anything.
+}
+else if (typeof navigator != 'undefined' && navigator.product == 'ReactNative') {
+	// You're in ReactNative. Import things how you need to here.
+	// @MobileDevs (don't edit the other imports).
+	var axios = require('axios');
+	var { DOMParser } = require('xmldom')
+}
+else {
+	// You're in NodeJS.
+	var axios = require('axios');
+	var { DOMParser } = require('xmldom')
+}
+//-------------------------------------------------------------------------------
+// CORS-PLATFORM IMPORTS. ONLY CHANGE THE IMORTS THAT BELONG TO YOUR PLATOFRM!!!!
+//-------------------------------------------------------------------------------
+
+
 
 //------------------------------------------------------------------------------
 // This is a very hack solution to create an XML header for a SOAP request using
@@ -7,6 +27,9 @@ const { DOMParser } = require('xmldom')
 // There is no SOAP api that does this (accross all of those). Please don't
 // change and try to make improvements to this and just leave it be. It works.
 //------------------------------------------------------------------------------
+
+
+
 
 function build_tag(label, value) {
 	if (value == null) {
@@ -55,7 +78,7 @@ function reformat(resp) {
 	return resp;
 }
 
-function call_api(url, namespace, method, args, success, error) {
+function soap(url, namespace, method, args, success, error) {
 	var xmls = build_xml(namespace, method, args);
 	axios.post(url,xmls,
 		{headers:
@@ -89,10 +112,33 @@ function call_api(url, namespace, method, args, success, error) {
 		});
 }
 
-module.exports = {
-	call_api: call_api,
-}
 
+
+//-------------------------------------------------------------------------------
+// CORS-PLATFORM IMPORTS. ONLY CHANGE THE IMORTS THAT BELONG TO YOUR PLATOFRM!!!!
+//-------------------------------------------------------------------------------
+if (typeof document != 'undefined') {
+	// You're in a web-browser. Don't 'require' anything.
+}
+else if (typeof navigator != 'undefined' && navigator.product == 'ReactNative') {
+	// You're in ReactNative. Import things how you need to here.
+	// @MobileDevs (don't edit the other imports).
+	module.exports = soap;
+}
+else {
+	// You're in NodeJS.
+	module.exports = soap;
+}
+//-------------------------------------------------------------------------------
+// CORS-PLATFORM IMPORTS. ONLY CHANGE THE IMORTS THAT BELONG TO YOUR PLATOFRM!!!!
+//-------------------------------------------------------------------------------
+
+
+
+
+
+// SOME TESTING. DON'T DELETE THIS IN CASE I NEED TO TEST STUFF LATER
+//
 // url = endpoint('core/auth');
 // namespace = 'coreAuth';
 // method = 'signin';
@@ -112,10 +158,11 @@ module.exports = {
 // console.log(build_args(args));
 // console.log(wrap_method(method, args));
 // console.log(build_xml(namespace, method, args));
-// console.log(call_api(url, namespace, method, args, function(resp) {
+// console.log(soap(url, namespace, method, args, function(resp) {
 // 	console.log('success');
 // 	console.log(resp);
 // }, function(err) {
 // 	console.log('error');
 // 	console.log(err);
 // }));
+
