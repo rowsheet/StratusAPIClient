@@ -20,8 +20,8 @@ else {
 
 
 
-var BASE_URL = "http://localhost:9000/api/"
-// var BASE_URL = "http://localhost:8080/api/"
+// var BASE_URL = "http://localhost:9000/api/"
+var BASE_URL = "http://localhost:8080/api/"
 // var BASE_URL = "https://stratus-api-heroku.herokuapp.com/api/";
 
 
