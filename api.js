@@ -44,14 +44,6 @@ api = {
 				soap(endpoint("core/auth"), "coreAuth", "signin", args, success, error);
 			},
 		},
-		settings: {
-			signup: function(args, success, error) {
-				soap(endpoint("core/settings"), "coreSettings", "signup", args, success, error);
-			},
-			signin: function(args, success, error) {
-				soap(endpoint("core/settings"), "coreSettings", "signin", args, success, error);
-			},
-		},
 	},
 }
 
