@@ -85,6 +85,7 @@ module.exports = {
 	response: response,
 	response_err: response_err,
 	log: log,
+	_log: _log,
 	info: info,
 	_info: _info,
 	INFO: INFO,

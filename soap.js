@@ -105,25 +105,23 @@ function soap(url, namespace, method, args, success, error) {
 			if (json.http_status_code != 200) {
 				throw json;
 			}
-			try {
-				json = reformat(json);
-				success(json);
-			} catch {
+			if (typeof success != 'function') {
 				console.log("WARNING: An successful API call was made, but no callback function was passed.");
 				console.error("url: " + url);
 				console.error("method: " + method);
 				console.error("response: " + json);
 			}
+			json = reformat(json);
+			success(json);
 		}).catch(err=>{
-			if (error == undefined) {
+			if (typeof success != 'error') {
 				console.error("WARNING: A failed API call was made, but no error function was passed.");
 				console.error("url: " + url);
 				console.error("method: " + method);
 				console.error("err: " + err);
-			} else {
-				err = reformat(err);
-				error(err);
 			}
+			err = reformat(err);
+			error(err);
 		});
 }
 
